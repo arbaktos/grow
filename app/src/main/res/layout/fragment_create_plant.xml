@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- TODO: написать отдельный лейаут для спинера -->
+    <!-- TODO: написать отдельный лейаут для тоггл кнопок -->
+    <!-- TODO: написать отдельный лейаут для кнопки сохранить - закругленные края, шрифт-->
+    <!-- TODO: убрать полоски из edit text -->
+
+    <data>
+        <variable
+            name="mSharedViewModel"
+            type="com.example.grow.SharedViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.CreatePlant">
+
+
+        <ImageView
+            android:id="@+id/plantImage"
+            android:layout_width="0dp"
+            android:layout_height="177dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_sharp_toys_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/etPlantAge"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etPlantName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toStartOf="@+id/plantImage"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/etPlantAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:ems="10"
+            android:hint="@string/plantage"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toTopOf="@+id/save_button"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/watering"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/etPlantName"
+            app:layout_constraintTop_toBottomOf="@+id/etPlantName" />
+
+        <Spinner
+            android:id="@+id/spinner_watering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="29dp"
+            android:entries="@array/watering_str"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="54dp"
+            android:layout_marginEnd="54dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/save"
+            android:background="#97ead2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="@+id/spinner_watering"
+            app:layout_constraintTop_toBottomOf="@+id/spinner_watering">
+
+            <ToggleButton
+                android:id="@+id/mo_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/mo"
+                android:textOn="@string/mo" />
+
+            <ToggleButton
+                android:id="@+id/tu_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/tu"
+                android:textOn="@string/tu" />
+
+            <ToggleButton
+                android:id="@+id/we_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/we"
+                android:textOn="@string/we" />
+
+            <ToggleButton
+                android:id="@+id/th_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/th"
+                android:textOn="@string/th" />
+
+            <ToggleButton
+                android:id="@+id/fr_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/fr"
+                android:textOn="@string/fr" />
+
+            <ToggleButton
+                android:id="@+id/sa_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/sa"
+                android:textOn="@string/sa" />
+
+            <ToggleButton
+                android:id="@+id/su_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textOff="@string/su"
+                android:textOn="@string/su" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextTextPersonName3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="@string/additional_care"
+            android:inputType="textPersonName"
+            android:paddingLeft="12dp"
+            android:paddingTop="6dp"
+            app:layout_constraintBottom_toTopOf="@+id/etPlantAge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintVertical_bias="0.832" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

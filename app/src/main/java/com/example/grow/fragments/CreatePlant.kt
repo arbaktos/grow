@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_create_plant.view.*
 class CreatePlant : Fragment() {
 
     private val viewModel: PlantViewModel by viewModels()
+    private var wateringUser = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,16 +36,36 @@ class CreatePlant : Fragment() {
             insertDataToDb()
         }
 
-        view.care_days_group.setOnClickListener {
-            dropsChoosing()
+        val dropFull = R.drawable.ic_drop_full
+        val dropEmpty = R.drawable.ic_droplet_empty
+
+        view.toggle_drop1.setOnClickListener {
+            wateringUser = 1
+            it.setBackgroundResource(dropFull)
+            toggle_drop2.setBackgroundResource(dropEmpty)
+            toggle_drop3.setBackgroundResource(dropEmpty)
+
+        }
+        view.toggle_drop2.setOnClickListener {
+            wateringUser = 2
+            toggle_drop1.setBackgroundResource(dropFull)
+            it.setBackgroundResource(dropFull)
+            toggle_drop3.setBackgroundResource(dropEmpty)
+        }
+        view.toggle_drop3.setOnClickListener {
+            wateringUser = 3
+            toggle_drop1.setBackgroundResource(dropFull)
+            toggle_drop2.setBackgroundResource(dropFull)
+            it.setBackgroundResource(dropFull)
         }
 
         return view
     }
 
+
     private fun insertDataToDb() {
         val name = etPlantName.text.toString()
-        val watering = dropsChoosing()
+        val watering = wateringUser
         val caredays = checkCareDays()
         val additionalcare = additional_care.text.toString()
         val validation = checkDataFromUser(caredays)
@@ -72,41 +93,6 @@ class CreatePlant : Fragment() {
         return !careDays.isEmpty()
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return super.onOptionsItemSelected(item)
-//    }
-//
-//    private fun parseWatering(watering: String): Watering {
-//        return when(watering){
-//            "1 drop" -> {Watering.LOW}
-//            "2 drops" -> {Watering.MEDIUM}
-//            "3 drops" -> {Watering.ALOT}
-//            else -> {Watering.LOW}
-//
-//        }
-//    }
-
-    private fun dropsChoosing(): Int {
-        var wateringUser = 0
-        val dropFullID = resources.getIdentifier("ic_drop_full", "drawable", "res")
-        toggle_drop1.setOnClickListener {
-            wateringUser = 1
-            it.setBackgroundResource(dropFullID)
-            }
-        toggle_drop2.setOnClickListener {
-            wateringUser = 2
-            toggle_drop1.setBackgroundResource(dropFullID)
-            it.setBackgroundResource(dropFullID)
-        }
-        toggle_drop3.setOnClickListener {
-            wateringUser = 3
-            it.setBackgroundResource(dropFullID)
-        }
-        println(wateringUser)
-        return wateringUser
-        }
-
-
     private fun checkCareDays(): String {
         val buttonList = listOf<ToggleButton>(mo_btn, tu_btn, we_btn, th_btn, fr_btn, sa_btn, su_btn)
         var careDaysList = ""
@@ -116,5 +102,7 @@ class CreatePlant : Fragment() {
             }
         }
         return careDaysList
-    }}
+    }
+
+}
 

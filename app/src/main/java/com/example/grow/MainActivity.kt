@@ -17,8 +17,7 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
-
-    //TODO - get picture from the phone camera
+    //TODO refactoring: add all constants to a separate file, make CreatePlane fragment less crouded
     //TODO HOW to store pictures in the Database
     //TODO - UPDATE data validation from user - name or picture should be in place
     //TODO - fix the keyboard when typing in the plane name

@@ -36,6 +36,7 @@ class CreatePlant : Fragment() {
 
     private val viewModel: PlantViewModel by viewModels()
     private var wateringUser = 0
+    private var takenImage: Bitmap? = null
 
     fun makeToast(text: String) {
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
@@ -98,68 +99,75 @@ class CreatePlant : Fragment() {
         return view
     }
 
+
+
+    private fun insertDataToDb() {
+        val name = etPlantName.text.toString()
+        val watering = wateringUser
+        val caredays = checkCareDays()
+        val additionalcare = additional_care.text.toString()
+        val validation = checkDataFromUser(caredays)
+        val plantPicture = takenImage
+
+        if (validation) {
+            //insert data to database
+            val newData = PlantData(
+                0,
+                name,
+                watering,
+                caredays,
+                additionalcare,
+                plantPicture
+            )
+            viewModel.insertData(newData)
+
+            Toast.makeText(requireContext(), "Successfully added", Toast.LENGTH_SHORT)
+                .show() //TODO what is requireContext()??
+            findNavController().navigate(R.id.action_createPlant_to_plantList)
+            println(caredays)
+        } else {
+            Toast.makeText(requireContext(), "Please fill in watering days", Toast.LENGTH_SHORT)
+                .show()
+        }
+
+    }
+
+
+
+    private fun checkDataFromUser(careDays: String): Boolean {
+        return careDays.isNotEmpty()
+    }
+
+    private fun checkCareDays(): String {
+        val buttonList =
+            listOf<ToggleButton>(mo_btn, tu_btn, we_btn, th_btn, fr_btn, sa_btn, su_btn)
+        var careDaysList = ""
+        for (button in buttonList) {
+            if (button.isChecked) {
+                careDaysList += button.text.toString()
+            }
+        }
+        return careDaysList
+    }
+
     private fun getPhotoFile(fileName: String): File {
         val storageDirectory = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirectory)
 
     }
 
-    private fun insertDataToDb() {
-            val name = etPlantName.text.toString()
-            val watering = wateringUser
-            val caredays = checkCareDays()
-            val additionalcare = additional_care.text.toString()
-            val validation = checkDataFromUser(caredays)
-            if (validation) {
-                //insert data to database
-                val newData = PlantData(
-                    0,
-                    name,
-                    watering,
-                    caredays,
-                    additionalcare
-                )
-                viewModel.insertData(newData)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            //val takenImage = data?.extras?.get("data") as Bitmap
 
-                Toast.makeText(requireContext(), "Successfully added", Toast.LENGTH_SHORT)
-                    .show() //TODO what is requireContext()??
-                findNavController().navigate(R.id.action_createPlant_to_plantList)
-                println(caredays)
-            } else {
-                Toast.makeText(requireContext(), "Please fill in watering days", Toast.LENGTH_SHORT)
-                    .show()
-            }
-
+            takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
+            plantImage.setImageBitmap(takenImage)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
 
-        private fun checkDataFromUser(careDays: String): Boolean {
-            return careDays.isNotEmpty()
-        }
 
-        private fun checkCareDays(): String {
-            val buttonList =
-                listOf<ToggleButton>(mo_btn, tu_btn, we_btn, th_btn, fr_btn, sa_btn, su_btn)
-            var careDaysList = ""
-            for (button in buttonList) {
-                if (button.isChecked) {
-                    careDaysList += button.text.toString()
-                }
-            }
-            return careDaysList
-        }
-
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                //val takenImage = data?.extras?.get("data") as Bitmap
-
-                val takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-                plantImage.setImageBitmap(takenImage)
-            } else {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
-
-
-        }
+    }
 
     }
 

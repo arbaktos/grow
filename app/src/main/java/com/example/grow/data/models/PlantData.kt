@@ -1,7 +1,10 @@
 package com.example.grow.data.models
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import com.example.grow.data.Converter
 
 
 @Entity(tableName = "plant_table")
@@ -11,5 +14,6 @@ data class PlantData(
     var name: String = "",
     var watering: Int = 1,
     var caredays: String = "",
-    var additionalcare: String = ""
+    var additionalcare: String = "",
+    var plantPicture: Bitmap?
 )
